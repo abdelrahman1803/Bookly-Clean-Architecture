@@ -2,7 +2,10 @@ import 'package:bookly/constants.dart';
 import 'package:bookly/core/utilities/routing/app_router.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(const Bookly());
+void main() {
+  
+  runApp(const Bookly());
+}
 
 class Bookly extends StatelessWidget {
   const Bookly({super.key});
