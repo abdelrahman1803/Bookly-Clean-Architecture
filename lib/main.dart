@@ -2,9 +2,10 @@ import 'package:bookly/constants.dart';
 import 'package:bookly/core/utilities/routing/app_router.dart';
 import 'package:bookly/features/home/domain/entities/book_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 
 void main() async {
+  await Hive.initFlutter();
   Hive.registerAdapter(BookEntityAdapter());
   await Hive.openBox(kFeaturedBox);
   runApp(const Bookly());
