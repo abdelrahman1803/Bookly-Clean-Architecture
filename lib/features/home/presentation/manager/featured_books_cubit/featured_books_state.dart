@@ -9,8 +9,9 @@ final class FeaturedBooksLoading extends FeaturedBooksState {}
 
 final class FeaturedBooksSuccess extends FeaturedBooksState {
   final List<BookEntity> books;
+  final bool isLoadingMore;
 
-  FeaturedBooksSuccess(this.books);
+  FeaturedBooksSuccess(this.books, {this.isLoadingMore = false});
 }
 
 final class FeaturedBooksFailure extends FeaturedBooksState {
