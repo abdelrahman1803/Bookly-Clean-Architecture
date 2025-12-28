@@ -17,7 +17,13 @@ class FeaturedBooksListViewBlocBuilder extends StatelessWidget {
         } else if (state is FeaturedBooksFailure) {
           return CustomErrorWidget(errMessage: state.message);
         }
-        return FeaturedListItemShimmer();
+        return ListView.separated(
+          itemCount: 6,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (BuildContext context, int index) =>
+              const FeaturedListItemShimmer(),
+          separatorBuilder: (context, index) => const SizedBox(width: 10),
+        );
       },
     );
   }
