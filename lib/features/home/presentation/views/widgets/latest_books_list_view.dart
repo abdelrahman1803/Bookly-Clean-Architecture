@@ -14,17 +14,9 @@ class LatestBooksListView extends StatelessWidget {
       padding: EdgeInsets.zero,
       itemCount: books.length,
       itemBuilder: (BuildContext context, int index) {
-        final item = books[index];
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: BookListViewItem(
-            title: item.title,
-            author: item.authorName!,
-            priceText: books[index].price == 0
-                ? 'Free'
-                : books[index].price.toString(),
-            imageUrl: books[index].image!,
-          ),
+          child: BookListViewItem(book: books[index]),
         );
       },
     );

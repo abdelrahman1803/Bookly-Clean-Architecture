@@ -77,8 +77,9 @@ class _FeaturedBooksListViewState extends State<FeaturedBooksListView> {
 
                 final imageUrl = widget.books[index].image ?? '';
                 return GestureDetector(
-                  onTap: () =>
-                      GoRouter.of(context).push(Routes.bookDetailsView),
+                  onTap: () => GoRouter.of(
+                    context,
+                  ).push(Routes.bookDetailsView, extra: state.books[index]),
                   child: widget.books.isNotEmpty
                       ? CustomBookItem(imageUrl: imageUrl)
                       : const ErrorImageWidget(),
