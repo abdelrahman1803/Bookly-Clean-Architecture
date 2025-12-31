@@ -13,9 +13,15 @@ class LatestBooksBlocBuilder extends StatelessWidget {
     return BlocBuilder<LatestBooksCubit, LatestBooksState>(
       builder: (context, state) {
         if (state is LatestBooksSuccess) {
-          return LatestBooksListView(state.books);
+          return LatestBooksListView(
+            books: state.books,
+            isLoadingMore: state.isLoadingMore,
+          );
         } else if (state is LatestBooksFailure) {
-          return CustomErrorWidget(errMessage: state.message);
+          return CustomErrorWidget(
+            errMessage: state.message,
+            onRetry: () => context.read<LatestBooksCubit>().fetchLatestBooks(),
+          );
         }
         return ListView.separated(
           itemCount: 6,
