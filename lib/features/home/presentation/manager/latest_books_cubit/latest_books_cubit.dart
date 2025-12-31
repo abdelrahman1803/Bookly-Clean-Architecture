@@ -3,7 +3,7 @@ import 'package:bookly/features/home/domain/use%20cases/fetch_latest_books_use_c
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
-part 'latest_books_cubit_state.dart';
+part 'latest_books_state.dart';
 
 class LatestBooksCubit extends Cubit<LatestBooksState> {
   LatestBooksCubit(this.fetchLatestBooksUseCase) : super(LatestBooksInitial());

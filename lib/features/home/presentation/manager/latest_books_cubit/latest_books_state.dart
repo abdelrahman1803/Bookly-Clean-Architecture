@@ -1,4 +1,4 @@
-part of 'latest_books_cubit_cubit.dart';
+part of 'latest_books_cubit.dart';
 
 @immutable
 sealed class LatestBooksState {}
