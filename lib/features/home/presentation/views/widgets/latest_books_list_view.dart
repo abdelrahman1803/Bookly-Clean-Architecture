@@ -1,3 +1,4 @@
+import 'package:bookly/core/shimmer/placeholders/vertical_book_list_item_shimmer.dart';
 import 'package:bookly/features/home/domain/entities/book_entity.dart';
 import 'package:bookly/features/home/presentation/views/widgets/book_list_view_item.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class LatestBooksListView extends StatelessWidget {
         if (isLoadingMore && index == books.length) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: Center(child: CircularProgressIndicator()),
+            child: VerticalBookListItemShimmer(),
           );
         }
 
