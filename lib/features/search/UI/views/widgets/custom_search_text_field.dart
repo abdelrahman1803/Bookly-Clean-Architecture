@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomSearchTextField extends StatelessWidget {
-  const CustomSearchTextField({super.key});
+  const CustomSearchTextField({
+    super.key,
+    this.onChanged,
+    this.onSubmitted,
+    this.controller,
+    this.showClearButton = false,
+    this.onClear,
+  });
+
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final TextEditingController? controller;
+  final bool showClearButton;
+  final VoidCallback? onClear;
 
   OutlineInputBorder _buildOutlineInputBorder() {
     return const OutlineInputBorder(
@@ -14,15 +27,28 @@ class CustomSearchTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
+      onChanged: onChanged,
+      onSubmitted: onSubmitted,
+      textInputAction: TextInputAction.search,
       decoration: InputDecoration(
         focusedBorder: _buildOutlineInputBorder(),
         enabledBorder: _buildOutlineInputBorder(),
         hintText: "Search...",
-        suffixIcon: const Icon(
-          FontAwesomeIcons.magnifyingGlass,
-          color: Colors.deepPurpleAccent,
-          size: 20,
-        ),
+        suffixIcon: showClearButton
+            ? IconButton(
+                onPressed: onClear,
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.deepPurpleAccent,
+                  size: 20,
+                ),
+              )
+            : const Icon(
+                FontAwesomeIcons.magnifyingGlass,
+                color: Colors.deepPurpleAccent,
+                size: 20,
+              ),
         filled: true,
         fillColor: Colors.deepPurpleAccent[50],
         labelText: "Search",
