@@ -33,7 +33,7 @@ class LatestBooksCubit extends Cubit<LatestBooksState> {
         );
       }
     }
-    var result = await fetchLatestBooksUseCase.call(pageNumber: pageNumber);
+    var result = await fetchLatestBooksUseCase.call(pageNumber);
     result.fold(
       (failure) {
         emit(LatestBooksFailure(failure.message));
