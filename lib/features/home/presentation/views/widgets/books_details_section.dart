@@ -14,7 +14,7 @@ class BookDetailsSection extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: 200,
+          width: MediaQuery.of(context).size.width / 2,
           child: CustomBookItem(imageUrl: book.image as String),
         ),
         const SizedBox(height: 30),
