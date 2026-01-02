@@ -3,13 +3,28 @@ import 'package:bookly/core/utilities/styles.dart';
 import 'package:bookly/features/home/domain/entities/book_entity.dart';
 import 'package:bookly/features/home/presentation/views/widgets/book_list_view_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/adapters.dart';
 
 class BookmarksView extends StatelessWidget {
   const BookmarksView({super.key});
 
+  String _bookmarkKey(BookEntity book) {
+    final id = book.bookId;
+    if (id.isNotEmpty) {
+      return id;
+    }
+    return book.title;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final error = Theme.of(context).colorScheme.error;
+    final saturatedError = HSLColor.fromColor(
+      error,
+    ).withSaturation(1).withLightness(0.45).toColor();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -34,7 +49,15 @@ class BookmarksView extends StatelessWidget {
                     kBookmarksBox,
                   ).listenable(),
                   builder: (context, box, _) {
-                    final books = box.values.toList().reversed.toList();
+                    final keys = box.keys
+                        .cast<String>()
+                        .toList()
+                        .reversed
+                        .toList();
+                    final books = keys
+                        .map((key) => box.get(key))
+                        .whereType<BookEntity>()
+                        .toList();
                     if (books.isEmpty) {
                       return const Center(
                         child: Text(
@@ -48,9 +71,45 @@ class BookmarksView extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       itemCount: books.length,
                       itemBuilder: (context, index) {
+                        final book = books[index];
+                        final key = _bookmarkKey(book);
+
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: BookListViewItem(book: books[index]),
+                          child: Slidable(
+                            key: ValueKey(key),
+                            endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                CustomSlidableAction(
+                                  onPressed: (_) async {
+                                    await box.delete(key);
+                                  },
+                                  backgroundColor: saturatedError,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FaIcon(
+                                        FontAwesomeIcons.trash,
+                                        size: 32,
+                                        color: Colors.white,
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        'Remove',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            child: BookListViewItem(book: book),
+                          ),
                         );
                       },
                     );
